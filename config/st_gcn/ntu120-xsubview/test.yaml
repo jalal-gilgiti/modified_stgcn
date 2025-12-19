@@ -1,0 +1,24 @@
+work_dir: ./work_dir/ntu120-xsubview
+
+weights: ./work_dir/ntu120-xsubview/epoch100_model.pt
+
+# feeder
+feeder: feeder.feeder.Feeder
+test_feeder_args:
+  data_path: ./data/NTU120-RGB-D/xsubview/val_data.npy
+  label_path: ./data/NTU120-RGB-D/xsubview/val_label.pkl
+
+# model
+model: net.st_gcn.Model
+model_args:
+  in_channels: 3
+  num_class: 120
+  dropout: 0.5
+  edge_importance_weighting: True
+  graph_args:
+    layout: 'ntu-rgb+d'
+    strategy: 'spatial'
+
+phase: test
+device: [0]
+test_batch_size: 128
